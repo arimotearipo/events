@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import { eventRoute, organizerRoute } from "./routers";
+import cors from "cors";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use("/healthcheck", (req: Request, res: Response, next: NextFunction) => {
     .status(200);
 });
 
+app.use(cors());
 app.use(express.json()); // enable json parsing
 
 app.use("/api/event", eventRoute);

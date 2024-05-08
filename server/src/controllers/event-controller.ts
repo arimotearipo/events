@@ -12,7 +12,7 @@ export async function listEvents(req: Request, res: Response) {
       ? { completed: req.query.completed }
       : {};
 
-    const data = await EventModel.find(completeFilterer);
+    const data = await EventModel.find(completeFilterer).populate("organizer");
 
     res.json({ data, length: data.length }).status(200);
   } catch (error) {
