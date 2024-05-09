@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getEventsAPI } from "../api/get-events";
-import Event from "../components/Event";
+import { getEventsAPI } from "../api";
+import EventCard from "../components/EventCard";
 import CompleteToggle from "../components/CompleteToggle";
 import { useState } from "react";
 
@@ -22,15 +22,18 @@ export default function VisitorPage() {
 
   return (
     <div>
-      <CompleteToggle checked={complete} onToggle={handleToggle} />
+      <div className="flex flex-col items-center">
+        <span className=" text-[32px] font-bold">Events</span>
+        <CompleteToggle checked={complete} onToggle={handleToggle} />
+      </div>
       <div className="grid grid-cols-4 gap-4">
         {eventData?.data.map((ev) => (
-          <Event
+          <EventCard
             key={ev._id}
             name={ev.name}
-            datetime={new Date(ev.datetime)}
+            date={ev.date}
             location={ev.location}
-            organizer={ev.organizer.name}
+            organizer={ev.organizer}
           />
         ))}
       </div>

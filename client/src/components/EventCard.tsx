@@ -1,13 +1,13 @@
 import { Card, CardContent } from "@mui/material";
 
-type EventProps = {
+type EventCardProps = {
   organizer: string;
   name: string;
-  datetime: Date;
+  date: Date;
   location: string;
 };
 
-function Event({ organizer, name, datetime, location }: EventProps) {
+function EventCard({ organizer, name, date, location }: EventCardProps) {
   return (
     <Card className="max-w-[300px]">
       <CardContent className="flex flex-col gap-y-[2px]">
@@ -15,11 +15,13 @@ function Event({ organizer, name, datetime, location }: EventProps) {
           {organizer}
         </span>
         <span className="font-extrabold text-lg text-[#203d45]">{name}</span>
-        <span className="font-semibold text-md">{datetime.toDateString()}</span>
+        <span className="font-semibold text-md">
+          {new Date(date).toDateString()}
+        </span>
         <span className="font-medium">{location}</span>
       </CardContent>
     </Card>
   );
 }
 
-export default Event;
+export default EventCard;

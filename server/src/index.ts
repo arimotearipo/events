@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import { eventRoute, organizerRoute } from "./routers";
+import { apiRoute } from "./routers";
 import cors from "cors";
 import dotenv from "dotenv";
 
@@ -19,8 +19,7 @@ app.use("/healthcheck", (req: Request, res: Response, next: NextFunction) => {
 app.use(cors());
 app.use(express.json()); // enable json parsing
 
-app.use("/api/event", eventRoute);
-app.use("/api/organizer", organizerRoute);
+app.use("/api", apiRoute);
 
 mongoose.connect(process.env.MONGOOSE_CONNECTION || "");
 

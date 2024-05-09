@@ -13,12 +13,12 @@ function Events() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-y-[10px]">
       <Tabs onChange={handleChange} centered value={userType}>
         <Tab label="Visitor" value={"visitor"} />
-        <Tab label="Organizer" value={"organizer"} />
+        <Tab label="Admin" value={"admin"} />
       </Tabs>
-      {userType === "organizer" ? <OrganizerPage /> : <VisitorPage />}
+      {userType === "admin" ? <OrganizerPage /> : <VisitorPage />}
     </div>
   );
 }

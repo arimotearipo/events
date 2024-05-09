@@ -20,18 +20,21 @@ function OrganizerSelector({ organizers }: OrganizerSelectorProps) {
   };
 
   return (
-    <>
-      <FormControl>
-        <InputLabel>Organizer</InputLabel>
-        <Select value={organizerName} label="Organizer" onChange={handleChange}>
-          {organizers.map((org) => (
-            <MenuItem key={org._id} value={org.name}>
-              {org.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </>
+    <FormControl>
+      <InputLabel>Organizer</InputLabel>
+      <Select
+        value={organizerName}
+        label="Organizer"
+        onChange={handleChange}
+        className="min-w-[200px]"
+      >
+        {organizers.map((org) => (
+          <MenuItem key={org._id} value={org.name}>
+            {org.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
 

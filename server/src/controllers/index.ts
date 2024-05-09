@@ -1,10 +1,5 @@
 import { Request, Response } from "express";
-import {
-  EventModel,
-  OrganizerModel,
-  IEvent,
-  IOrganizer,
-} from "../models/event-model";
+import { EventModel, IEvent } from "../models";
 
 export async function listEvents(req: Request, res: Response) {
   try {
@@ -12,7 +7,7 @@ export async function listEvents(req: Request, res: Response) {
       ? { completed: req.query.completed }
       : {};
 
-    const data = await EventModel.find(completeFilterer).populate("organizer");
+    const data = await EventModel.find(completeFilterer);
 
     res.json({ data, length: data.length }).status(200);
   } catch (error) {
@@ -24,10 +19,6 @@ export async function listEvents(req: Request, res: Response) {
 export async function createEvent(req: Request, res: Response) {
   try {
     const eventData: IEvent = req.body;
-
-    const organizerId = eventData.organizer;
-
-    await OrganizerModel.findById(organizerId); // verify if organizer exists
 
     const newEvent = new EventModel(eventData);
 
@@ -46,7 +37,7 @@ export async function deleteEvent(req: Request, res: Response) {
   try {
     const { id } = req.params;
 
-    await EventModel.deleteOne({ organizer: id });
+    await EventModel.deleteOne({ _id: id });
 
     res.status(201).json({
       message: "Event deleted successfully",
@@ -75,7 +66,9 @@ export async function completeEvent(req: Request, res: Response) {
   try {
     const { id } = req.params;
 
-    await EventModel.updateOne({ _id: id }, { completed: true });
+    const { completed } = req.body;
+
+    await EventModel.updateOne({ _id: id }, { completed });
 
     res.json({ message: "Marked event as completed", eventId: id }).status(200);
   } catch (error) {

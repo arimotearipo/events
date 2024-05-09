@@ -1,11 +1,9 @@
-export type UserType = "organizer" | "visitor";
+export type UserType = "admin" | "visitor";
 
 export type Event = {
-  organizer: {
-    name: string;
-  };
+  organizer: string;
   name: string;
-  datetime: string;
+  date: Date;
   location: string;
   completed: boolean;
   _id: string;
@@ -25,3 +23,12 @@ export type Organizers = {
   data: Organizer[];
   length: number;
 };
+
+export type AddEventFormValues = {
+  organizer: string;
+  name: string;
+  date: Date;
+  location: string;
+};
+
+export type UpdateEventFormValues = { eventId: string } & AddEventFormValues;
