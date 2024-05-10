@@ -1,6 +1,6 @@
 ### Database
 
-You will need to have a running instance of a MongoDB database running on port **27017**
+You will need to have a running instance of a MongoDB database. Make sure you have the connection string of this MongoDB database.
 
 ### Server
 
