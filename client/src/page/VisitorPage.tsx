@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getEventsAPI } from "../api";
 import EventCard from "../components/EventCard";
 import CompleteToggle from "../components/CompleteToggle";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function VisitorPage() {
   const [complete, setComplete] = useState(false);
@@ -16,6 +16,22 @@ export default function VisitorPage() {
     setComplete((prev) => !prev);
   };
 
+  const eventCards = useMemo(() => {
+    if (eventData?.data.length === 0) {
+      return <span>Nothing to show here...</span>;
+    }
+
+    return eventData?.data.map((ev) => (
+      <EventCard
+        key={ev._id}
+        name={ev.name}
+        date={ev.date}
+        location={ev.location}
+        organizer={ev.organizer}
+      />
+    ));
+  }, [eventData?.data]);
+
   if (eventIsLoading) {
     return <h1>Loading...</h1>;
   }
@@ -26,17 +42,7 @@ export default function VisitorPage() {
         <span className=" text-[32px] font-bold">Events</span>
         <CompleteToggle checked={complete} onToggle={handleToggle} />
       </div>
-      <div className="grid grid-cols-4 gap-4">
-        {eventData?.data.map((ev) => (
-          <EventCard
-            key={ev._id}
-            name={ev.name}
-            date={ev.date}
-            location={ev.location}
-            organizer={ev.organizer}
-          />
-        ))}
-      </div>
+      <div className="grid grid-cols-4 gap-4">{eventCards}</div>
     </div>
   );
 }

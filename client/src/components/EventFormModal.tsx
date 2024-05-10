@@ -1,19 +1,15 @@
 import { Box, Button, Input, Modal } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
-import { UpdateEventFormValues } from "../types";
-import { updateEventAPI } from "../api";
+import { EventFormValues } from "../types";
+import { addEventAPI, updateEventAPI } from "../api";
 import dayjs from "dayjs";
 
-type UpdateEventModalProps = {
+type EventFormModalProps = {
   open: boolean;
   onClose: () => void;
-  eventId: string;
-  organizer: string;
-  name: string;
-  date: Date;
-  location: string;
-};
+  isUpdateForm?: boolean;
+} & EventFormValues;
 
 const style = {
   position: "absolute",
@@ -27,19 +23,17 @@ const style = {
   p: 4,
 };
 
-function UpdateEventModal({
+function EventFormModal({
   open,
   onClose,
-  eventId,
-  organizer,
-  name,
-  date,
-  location,
-}: UpdateEventModalProps) {
+  isUpdateForm = false,
+  ...eventFormValues
+}: EventFormModalProps) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (data: UpdateEventFormValues) => updateEventAPI(data),
+    mutationFn: (data: EventFormValues) =>
+      isUpdateForm ? updateEventAPI(data) : addEventAPI(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
       onClose();
@@ -47,15 +41,12 @@ function UpdateEventModal({
   });
 
   const formik = useFormik({
-    initialValues: {
-      eventId,
-      organizer,
-      name,
-      date: new Date(date),
-      location,
-    },
-    onSubmit: (values: UpdateEventFormValues) => mutation.mutate(values),
+    initialValues: { ...eventFormValues },
+    onSubmit: (values: EventFormValues) => mutation.mutate(values),
   });
+
+  const title = isUpdateForm ? "Update Event" : "Add Event";
+  const buttonText = isUpdateForm ? "Update" : "Add";
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -64,7 +55,7 @@ function UpdateEventModal({
           className="flex flex-col gap-y-[20px] min-w-[300px]"
           onSubmit={formik.handleSubmit}
         >
-          <span className="text-xl">Update Event</span>
+          <span className="text-xl">{title}</span>
           <label htmlFor="organizer">Organizer</label>
           <Input
             id="organizer"
@@ -99,7 +90,7 @@ function UpdateEventModal({
             required
           />
           <Button variant="outlined" type="submit">
-            Update
+            {buttonText}
           </Button>
         </form>
       </Box>
@@ -107,4 +98,4 @@ function UpdateEventModal({
   );
 }
 
-export default UpdateEventModal;
+export default EventFormModal;

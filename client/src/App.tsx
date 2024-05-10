@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { UserType } from "./types";
 import { Tabs, Tab } from "@mui/material";
-import OrganizerPage from "./page/OrganizerPage";
+import AdminPage from "./page/AdminPage";
 import VisitorPage from "./page/VisitorPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -18,7 +18,9 @@ function Events() {
         <Tab label="Visitor" value={"visitor"} />
         <Tab label="Admin" value={"admin"} />
       </Tabs>
-      {userType === "admin" ? <OrganizerPage /> : <VisitorPage />}
+      <div className="flex justify-center w-full">
+        {userType === "admin" ? <AdminPage /> : <VisitorPage />}
+      </div>
     </div>
   );
 }

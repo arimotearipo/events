@@ -24,11 +24,10 @@ export type Organizers = {
   length: number;
 };
 
-export type AddEventFormValues = {
+export type EventFormValues = {
+  eventId?: string;
   organizer: string;
   name: string;
   date: Date;
   location: string;
 };
-
-export type UpdateEventFormValues = { eventId: string } & AddEventFormValues;

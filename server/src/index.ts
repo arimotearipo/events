@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 
-app.use("/healthcheck", (req: Request, res: Response, next: NextFunction) => {
+app.use("/healthcheck", (req: Request, res: Response) => {
   res
     .json({
       message: "connection healthy",

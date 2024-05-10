@@ -11,7 +11,7 @@ function CompleteToggle({ checked, onToggle }: CompleteToggleProps) {
       <FormControlLabel
         control={<Switch checked={checked} onChange={onToggle} />}
         className="w-fit"
-        label="Completed"
+        label="Show Completed"
       />
     </FormGroup>
   );

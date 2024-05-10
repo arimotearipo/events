@@ -1,7 +1,7 @@
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
-import UpdateEventModal from "./UpdateEventModal";
 import { useState } from "react";
+import EventFormModal from "./EventFormModal";
 
 type DeleteButtonProps = {
   eventId: string;
@@ -17,9 +17,10 @@ function EditButton(props: DeleteButtonProps) {
   return (
     <>
       {open === true && (
-        <UpdateEventModal
+        <EventFormModal
           open={open}
           onClose={() => setOpen(false)}
+          isUpdateForm
           {...props}
         />
       )}

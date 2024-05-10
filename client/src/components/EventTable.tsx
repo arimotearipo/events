@@ -10,6 +10,7 @@ import CompleteCheckbox from "./CompleteCheckbox";
 import { useMemo } from "react";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
+import AddButton from "./AddButton";
 
 type EventRowProps = {
   eventId: string;
@@ -92,14 +93,19 @@ function EventTable({ data }: EventTableProps) {
   }, [events]);
 
   return (
-    <div className="border-[1px]">
-      <Table>
-        <TableHead>
-          <TableRow sx={{ fontWeight: 600 }}>{columnHeaders}</TableRow>
-        </TableHead>
-        <TableBody>{eventRows}</TableBody>
-      </Table>
-    </div>
+    <Table className="border">
+      <TableHead>
+        <TableRow sx={{ fontWeight: 600 }}>{columnHeaders}</TableRow>
+      </TableHead>
+      <TableBody>
+        {eventRows}
+        <TableRow>
+          <TableCell colSpan={8}>
+            <AddButton />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }
 

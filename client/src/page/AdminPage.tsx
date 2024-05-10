@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { getEventsAPI } from "../api";
 import EventTable from "../components/EventTable";
-import AddEvent from "../components/AddEvent";
 
-export default function OrganizerPage() {
+export default function AdminPage() {
   const { data: eventData, isLoading: eventIsLoading } = useQuery({
     queryKey: ["events"],
     queryFn: () => getEventsAPI(),
@@ -14,9 +13,8 @@ export default function OrganizerPage() {
   }
 
   return (
-    <div className="flex justify-evenly w-full">
+    <div className="">
       <EventTable data={eventData} />
-      <AddEvent />
     </div>
   );
 }

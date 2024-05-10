@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AddEventFormValues, Events, UpdateEventFormValues } from "../types";
+import { EventFormValues, Events } from "../types";
 
 const BASE_URL = "http://localhost:4000/api";
 
@@ -23,7 +23,7 @@ export async function completeEventAPI(data: {
   });
 }
 
-export async function addEventAPI(payload: AddEventFormValues) {
+export async function addEventAPI(payload: EventFormValues) {
   await axios.post(`${BASE_URL}/create-event`, payload);
 }
 
@@ -31,7 +31,7 @@ export async function deleteEventAPI(eventId: string) {
   await axios.delete(`${BASE_URL}/delete-event/${eventId}`);
 }
 
-export async function updateEventAPI(payload: UpdateEventFormValues) {
+export async function updateEventAPI(payload: EventFormValues) {
   const { eventId, ...rest } = payload;
 
   await axios.put(`${BASE_URL}/update-event/${eventId}`, rest);
